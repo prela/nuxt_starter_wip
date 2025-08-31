@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  nuxt-app:
+    image: ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG:-latest}
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      # eslint-disable-next-line yaml/plain-scalar
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,65 @@
+---
+alwaysApply: true
+---
+# Code quality standards and error prevention measures
+
+## Error Prevention Standards
+- ALWAYS implement input validation using Zod schemas
+- ALWAYS handle async operations with try-catch blocks
+- ALWAYS provide fallback values for optional properties
+- ALWAYS validate environment variables at startup
+- NEVER ignore TypeScript errors or warnings
+- ALWAYS implement proper loading and error states in UI
+
+## Linting and Formatting
+- ALWAYS follow @antfu/eslint-config rules
+- ALWAYS fix linting errors before committing
+- NEVER disable eslint rules without documented justification
+- ALWAYS run linting checks in CI/CD pipeline
+
+## TypeScript Best Practices
+- ALWAYS define proper interfaces for data structures
+- ALWAYS use union types instead of any
+- ALWAYS implement type guards for runtime validation
+- PREFER type inference over explicit typing when obvious
+- ALWAYS export types that might be reused
+
+## Common Error Patterns to Avoid
+- DON'T mutate props directly in Vue components
+- DON'T forget to await promises in async functions
+- DON'T use reactive() on primitive values - use ref() instead
+- DON'T forget to handle 404 cases in API routes
+- DON'T skip error handling in composables
+
+## Documentation Requirements
+- ALWAYS add JSDoc comments for public functions
+- ALWAYS document complex business logic
+- ALWAYS include usage examples in composable documentation
+- ALWAYS update README when adding new features
+- ALWAYS document API endpoints with proper schemas
+
+## Example Error Handling Pattern:
+```ts
+// Proper error handling in composables
+export function useApiCall() {
+  const execute = async <T>(apiCall: () => Promise<T>) => {
+    try {
+      loading.value = true
+      error.value = null
+      const result = await apiCall()
+      return { data: result, error: null }
+    }
+    catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
+      error.value = errorMessage
+      // Log error for debugging
+      console.error('API call failed:', errorMessage)
+
+      return { data: null, error: errorMessage }
+    }
+    finally {
+      loading.value = false
+    }
+  }
+}
+```

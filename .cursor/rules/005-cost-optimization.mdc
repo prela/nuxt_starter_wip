@@ -1,0 +1,40 @@
+---
+alwaysApply: true
+---
+# Cost Optimization and Performance guidelines
+
+## AI Interaction Optimization
+- PROVIDE only essential code without excessive explanations
+- REUSE existing patterns instead of creating new ones
+- REFERENCE existing files when possible rather than rewriting
+- ASK for clarification on ambiguous requirements to avoid rework
+- FOCUS on incremental improvements rather than complete rewrites
+
+## Performance Optimization
+- ALWAYS implement lazy loading for non-critical components
+- ALWAYS use `defineAsyncComponent` for heavy components
+- ALWAYS optimize bundle size using tree-shaking
+- ALWAYS implement proper caching strategies
+- PREFER server-side rendering for SEO-critical pages
+- ALWAYS optimize images using Nuxt Image module
+
+## Resource Management
+- MINIMIZE external dependencies
+- REUSE Nuxt UI components before considering alternatives
+- OPTIMIZE database queries to reduce server costs
+- IMPLEMENT proper connection pooling for databases
+- USE CDN for static assets to reduce server load
+
+## Code Efficiency Patterns
+- PREFER computed properties over methods for reactive calculations
+- IMPLEMENT debouncing for user input handlers
+- USE virtual scrolling for large lists
+- MINIMIZE watchers and prefer computed properties
+- IMPLEMENT proper component lifecycle cleanup
+
+## Bundle Optimization
+- ALWAYS analyze bundle size with `nuxi analyze`
+- SPLIT large pages into smaller components
+- IMPLEMENT dynamic imports for heavy libraries
+- REMOVE unused dependencies regularly
+- CONFIGURE Vite optimizations properly

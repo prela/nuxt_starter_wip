@@ -1,0 +1,65 @@
+# Docker and Git files
+**/.dockerignore
+**/.git
+**/.gitignore
+**/docker-compose*
+**/compose.y*ml
+**/Dockerfile*
+
+# Environment files (except production)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Node.js
+**/node_modules
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# Build outputs and cache (keep .output for production)
+**/.nuxt
+**/.nitro
+**/.cache
+**/dist
+
+# Development and testing
+**/reports
+**/coverage
+**/test-results
+**/playwright-report
+**/tests
+**/*.test.ts
+**/*.spec.ts
+**/vitest.config.ts
+**/playwright.config.ts
+
+# Development tools and configs
+**/.vscode
+**/.cursor
+**/.fleet
+**/.idea
+**/eslint.config.*
+**/.eslintrc*
+**/.prettierrc*
+**/tsconfig.json
+**/.editorconfig
+
+# Documentation and misc
+**/README.md
+**/CHANGELOG.md
+**/LICENSE
+**/.DS_Store
+**/Thumbs.db
+
+# Logs
+**/logs
+**/*.log
+
+# Temporary files
+**/tmp
+**/temp
+
+# Package manager files
+**/pnpm-workspace.yaml

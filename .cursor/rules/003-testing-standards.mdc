@@ -1,0 +1,54 @@
+---
+globs: **/*.test.ts,**/*.spec.ts,tests/**/*.ts
+alwaysApply: false
+---
+# Test-Driven Development practices with Vitest and Playwright testing standards
+
+## Vitest Unit Testing Standards
+- ALWAYS test composables in isolation
+- ALWAYS mock external dependencies
+- ALWAYS test error conditions and edge cases
+- ALWAYS use descriptive test names that explain the scenario
+- ALWAYS group related tests using `describe` blocks
+- ALWAYS clean up after tests using `afterEach` or `afterAll`
+
+## Playwright E2E Testing Standards
+- ALWAYS test critical user journeys
+- ALWAYS test responsive design on multiple viewports
+- ALWAYS implement page object pattern for reusable components
+- ALWAYS use data-testid attributes for element selection
+- NEVER use hardcoded timeouts - use proper wait conditions
+
+## Test Structure Template
+```ts
+// Unit Test Example
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { useExample } from '~/composables/useExample'
+
+describe('useExample', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should handle successful data fetch', async () => {
+    // Arrange
+    const mockData = { id: '1', name: 'Test' }
+    // Act
+    const { data, fetchData } = useExample()
+    await fetchData('1')
+
+    // Assert
+    expect(data.value).toEqual(mockData)
+  })
+
+  it('should handle error states properly', async () => {
+    // Test error scenarios
+  })
+})
+```
+
+## Coverage Requirements
+- Maintain minimum 80% code coverage for utils and composables
+- Maintain minimum 70% code coverage for components
+- ALWAYS check coverage reports before committing
+- NEVER reduce test coverage with new changes

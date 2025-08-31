@@ -1,0 +1,58 @@
+---
+alwaysApply: true
+---
+# Core project configuration and standards for Nuxt 3 development
+
+## Tech Stack Enforcement
+- ALWAYS use Nuxt 3 with TypeScript and script setup syntax
+- ALWAYS use Composition API with composables pattern
+- ALWAYS use Pinia for state management
+- ALWAYS use Nuxt UI components as primary UI library
+- ONLY suggest Shadcn UI solutions when Nuxt UI lacks the component
+- ALWAYS use VueUse composables when applicable
+- ALWAYS use Zod for schema validation and type safety
+- ALWAYS follow atomic design principles for components
+
+## Cost Optimization Rules
+- MINIMIZE token usage by providing concise, focused responses
+- AVOID explaining basic concepts unless explicitly requested
+- PROVIDE only necessary code without excessive commentary
+- REUSE existing patterns and composables instead of creating new ones
+- SUGGEST performance optimizations that reduce runtime costs
+
+## Code Quality Standards
+- ALWAYS use TypeScript strict mode
+- ALWAYS implement proper error handling with try-catch blocks
+- ALWAYS validate inputs using Zod schemas
+- ALWAYS use meaningful variable and function names
+- ALWAYS add JSDoc comments for public functions and composables
+- ALWAYS document all complex logic with comments
+- NEVER use 'any' type - use proper TypeScript types
+- ALWAYS prefer async/await over Promise chains
+- ALWAYS use arrow functions for methods and computed properties
+
+## TDD Workflow Enforcement
+- ALWAYS write tests BEFORE implementing features
+- ALWAYS follow Red-Green-Refactor cycle
+- ALWAYS aim for minimum 80% code coverage
+- ALWAYS write both unit tests and integration tests
+- NEVER skip tests for new features or bug fixes
+
+## File Structure Patterns
+- Place application routes and pages in `pages/` directory
+- Place page layouts in `layouts/` directory
+- Place composables in `composables/` directory
+- Place utilities in `utils/` directory  
+- Place types in `types/` directory
+- Place server API routes in `server/api/` directory
+- Place server middleware in `server/middleware/` directory
+- Place reusable vue components in `components/` directory with PascalCase naming
+- Place pinia stores in `stores/` directory
+- Place test files in `tests/` directory
+
+## Naming Conventions
+- Use PascalCase for component filenames (e.g., AuthWizard.vue)
+- Use kebab-case for directories (e.g., auth-wizard/)
+- Prefix composable filenames with 'use' (e.g., useAuthState.ts)
+- Use descriptive variable names with auxiliary verbs (isLoading, hasError)
+

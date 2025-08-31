@@ -1,0 +1,38 @@
+---
+description: Docker containerization and Coolify deployment standards
+alwaysApply: false
+---
+# Docker containerization and Coolify deployment standards
+
+## Docker Best Practices
+- ALWAYS use multi-stage builds for production images
+- ALWAYS use specific version tags, never 'latest'
+- ALWAYS implement proper health checks
+- ALWAYS run containers as non-root user
+- ALWAYS minimize image layers and size
+- ALWAYS use .dockerignore to exclude unnecessary files
+
+## Coolify Deployment Standards
+- ALWAYS implement proper environment variable management
+- ALWAYS use secrets for sensitive configuration
+- ALWAYS implement proper logging for production debugging
+- ALWAYS configure proper resource limits
+- ALWAYS implement graceful shutdown handling
+
+## Production Configuration
+- ALWAYS enable production optimizations in Nuxt config
+- ALWAYS implement proper SSL/TLS configuration  
+- ALWAYS configure proper CORS policies
+- ALWAYS implement rate limiting for APIs
+- ALWAYS set up proper monitoring and alerting
+
+## Example Dockerfile Structure:
+[Dockerfile](mdc:Dockerfile)
+
+## Hetzner VPS Optimization
+- OPTIMIZE for European latency characteristics
+- IMPLEMENT proper backup strategies
+- CONFIGURE monitoring for resource usage
+- SET UP automated security updates
+- IMPLEMENT proper firewall configuration
+

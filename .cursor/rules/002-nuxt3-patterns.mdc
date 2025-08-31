@@ -1,0 +1,60 @@
+---
+globs: **/*.vue,pages/*.vue,layers/*.ts,layers/*vue,composables/*.ts,server/*.ts
+alwaysApply: false
+---
+# Nuxt 3 specific Development Patterns and best practices
+
+## Script Setup Standards
+- ALWAYS use `<script setup lang="ts">` syntax
+- ALWAYS define props using `defineProps<PropsInterface>()`
+- ALWAYS define emits using `defineEmits<EmitsInterface>()`
+- ALWAYS use `ref()` and `reactive()` for reactivity
+- PREFER `computed()` for derived state
+
+## Composables Pattern
+- ALWAYS prefix composables with `use` (e.g., `useAuth`, `useApi`)
+- ALWAYS return reactive objects from composables
+- ALWAYS handle loading states and error states in composables
+- ALWAYS implement proper cleanup in composables using `onUnmounted`
+
+## Server API Patterns
+- ALWAYS validate request bodies using Zod schemas
+- ALWAYS handle errors with proper HTTP status codes
+- ALWAYS use TypeScript for API routes
+- ALWAYS implement rate limiting for public endpoints
+- PREFER `$fetch` for internal API calls
+
+## Navigation and SEO
+- ALWAYS use `navigateTo()` for programmatic navigation
+- ALWAYS implement proper meta tags using `useSeoMeta()`
+- ALWAYS use `useHead()` for dynamic head management
+- ALWAYS implement proper error pages (404, 500)
+
+## Example Composable Structure:
+```ts
+export const useExample = () => {
+  const { $fetch } = useNuxtApp()
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const data = ref<ExampleData | null>(null)
+
+  const fetchData = async (id: string) => {
+    try {
+      loading.value = true
+      error.value = null
+      data.value = await $fetch(/api/example / ${ id })
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Unknown error'
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return {
+    data: readonly(data),
+    loading: readonly(loading),
+    error: readonly(error),
+    fetchData
+  }
+}
+```

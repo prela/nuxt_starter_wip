@@ -1,0 +1,30 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Test outputs and reports (consolidated in reports directory)
+reports/
+*.lcov
+
+# Development tools
+.fleet
+.idea
+
+# Misc
+.DS_Store
+
+# Local env files
+.env
+.env.*
+!.env.example

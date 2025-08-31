@@ -1,0 +1,205 @@
+name: Publish Docker
+on:
+  push:
+    branches: [main]
+    tags: ['v*.*.*']
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  # Wait for lint and test workflows to complete successfully
+  check-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for required checks to complete
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Waiting for quality checks to complete..."
+
+          # Function to check workflow status with retries
+          check_workflow() {
+            local workflow_name="$1"
+            local max_attempts=60  # 10 minutes with 10s intervals
+            local attempt=1
+            local api_retry=0
+            local max_api_retries=3
+
+            echo "⏳ Checking $workflow_name workflow..."
+
+            while [ $attempt -le $max_attempts ]; do
+              # Try API call with retry mechanism
+              while [ $api_retry -le $max_api_retries ]; do
+                local status
+                if status=$(gh run list \
+                  --workflow="$workflow_name" \
+                  --branch="${{ github.ref_name }}" \
+                  --limit=1 \
+                  --json status,conclusion \
+                  --jq '.[0] | .status + ":" + (.conclusion // "null")' 2>/dev/null); then
+                  break
+                else
+                  api_retry=$((api_retry + 1))
+                  if [ $api_retry -le $max_api_retries ]; then
+                    echo "⚠️  API call failed, retrying ($api_retry/$max_api_retries)..."
+                    sleep 5
+                  fi
+                fi
+              done
+
+              # If all API retries failed, exit with error
+              if [ $api_retry -gt $max_api_retries ]; then
+                echo "❌ Failed to query GitHub API after $max_api_retries retries"
+                echo "🔄 This might be a temporary GitHub API issue"
+                echo "💡 Try re-running the workflow or check GitHub status"
+                return 1
+              fi
+
+              if [ -z "$status" ] || [ "$status" = "null:null" ]; then
+                echo "❌ No workflow runs found for $workflow_name"
+                echo "💡 Make sure the workflow name matches exactly: '$workflow_name'"
+                return 1
+              fi
+
+              local run_status="${status%:*}"
+              local conclusion="${status#*:}"
+
+              echo "📊 $workflow_name: $run_status ($conclusion) - Attempt $attempt/$max_attempts"
+
+              if [ "$run_status" = "completed" ]; then
+                if [ "$conclusion" = "success" ]; then
+                  echo "✅ $workflow_name completed successfully!"
+                  return 0
+                else
+                  echo "❌ $workflow_name failed with conclusion: $conclusion"
+                  echo "🔗 Check workflow logs for details"
+                  return 1
+                fi
+              elif [ "$run_status" = "in_progress" ] || [ "$run_status" = "queued" ] || [ "$run_status" = "pending" ]; then
+                echo "⏳ $workflow_name still $run_status, waiting 10 seconds..."
+              else
+                echo "⚠️  Unknown status: $run_status"
+              fi
+
+              sleep 10
+              attempt=$((attempt + 1))
+              api_retry=0  # Reset API retry counter for next attempt
+            done
+
+            echo "⏰ Timeout waiting for $workflow_name workflow (waited ${max_attempts}0 seconds)"
+            return 1
+          }
+
+          # Check all required workflows
+          workflows=("Lint" "Tests")
+          failed_workflows=()
+
+          echo "🎯 Checking workflows: ${workflows[*]}"
+
+          for workflow in "${workflows[@]}"; do
+            if ! check_workflow "$workflow"; then
+              failed_workflows+=("$workflow")
+            fi
+          done
+
+          if [ ${#failed_workflows[@]} -eq 0 ]; then
+            echo ""
+            echo "✅ All quality checks passed successfully!"
+            echo "🚀 Ready for deployment!"
+          else
+            echo ""
+            echo "❌ The following workflows failed or timed out:"
+            printf '   - %s\n' "${failed_workflows[@]}"
+            echo ""
+            echo "🛑 Deployment blocked!"
+            echo "💡 Fix the failing workflows and try again"
+            exit 1
+          fi
+
+  build-push:
+    needs: check-quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🚀 Starting Docker build and push
+        run: |
+          echo "🚀 Quality gates passed - Building Docker image..."
+          echo "📦 Image will be pushed to: ghcr.io/${{ github.repository }}"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 🎉 Deployment successful!
+        if: success()
+        run: |
+          echo "🎉 Docker image built and pushed successfully!"
+          echo "🌐 Image available at: ghcr.io/${{ github.repository }}:latest"
+          echo "🚀 Coolify will now deploy to Hetzner VPS"
+
+      - name: 🚀 Trigger Coolify Deployment
+        if: success()
+        env:
+          WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+        run: |
+          if [ -n "$WEBHOOK_URL" ]; then
+            echo "🚀 Triggering Coolify deployment..."
+
+            if [ -n "$COOLIFY_API_TOKEN" ] && [[ "$WEBHOOK_URL" != *"uuid="* ]]; then
+              curl -X POST "$WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
+                -d '{
+                  "image": "ghcr.io/${{ github.repository }}:latest",
+                  "commit": "${{ github.sha }}",
+                  "branch": "${{ github.ref_name }}"
+                }' \
+                --fail --silent || echo "❌ Webhook call failed"
+            else
+              curl -X GET "$WEBHOOK_URL" \
+                -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
+                --fail --silent || echo "❌ Deployment webhook failed"
+            fi
+            echo "✅ Deployment triggered successfully!"
+          else
+            echo "⚠️ COOLIFY_WEBHOOK_URL not configured - skipping automatic deployment"
+          fi
+
+      - name: 🚨 Deployment failed!
+        if: failure()
+        run: |
+          echo "🚨 Docker build/push failed!"
+          echo "❌ Check the logs above for error details"
+          echo "🔧 Fix the issues and try again"
+          exit 1
