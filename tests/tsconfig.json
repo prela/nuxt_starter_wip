@@ -1,0 +1,50 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "#layers/core/*": [
+        "../layers/core/*"
+      ],
+      "#layers/core": [
+        "../layers/core"
+      ],
+      "~/*": [
+        "../app/*"
+      ],
+      "~~/*": [
+        "../*"
+      ],
+      "@/*": [
+        "../app/*"
+      ],
+      "@@/*": [
+        "../*"
+      ]
+    },
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "types/**/*.d.ts",
+    "../layers/**/*.vue",
+    "../layers/**/*.ts"
+  ],
+  "exclude": []
+}

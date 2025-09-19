@@ -1,0 +1,12 @@
+/* Global root stylesheet loaded by root nuxt.config.ts */
+/* Keep minimal to avoid duplication with layer core.css */
+:root {
+  color-scheme: light dark;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+

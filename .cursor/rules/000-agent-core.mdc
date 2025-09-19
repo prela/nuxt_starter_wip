@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+## COMMAND RUN CANCELLATION
+IMPORTANT If you think that command was canceled by the user, CHECK for acutal exit codes and output, VERIFY with user to confirm cancellation. If user did not cancelled command, run command again
+
+Wait for the command to complete naturally, capture the actual exit codes and output, do not cancel early, use timeouts only for genuinely long-running processes, verify every claim with actual tool output, not assumptions

@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Prepare Nuxt for testing
+        run: pnpm exec nuxi prepare
+        
       - name: Lint code
         run: pnpm run lint
 

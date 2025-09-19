@@ -36,7 +36,10 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare Nuxt for testing
+        run: pnpm exec nuxi prepare
 
       - name: Testing e2e
         run: pnpm run test:e2e

@@ -1,0 +1,479 @@
+/**
+ * Nuxt UI v4 Design System
+ * Tokenized CSS design system following Nuxt UI best practices
+ * Uses CSS variables for theme customization and dark mode support
+ */
+
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/**
+ * Root Variables for Light Mode
+ * Base design tokens and semantic color assignments
+ */
+:root {
+  /* Font Family Tokens */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Color Palette - Extended from Nuxt UI defaults */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
+
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e1;
+  --color-secondary-400: #94a3b8;
+  --color-secondary-500: #64748b;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1e293b;
+  --color-secondary-900: #0f172a;
+  --color-secondary-950: #020617;
+
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success-950: #052e16;
+
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-300: #93c5fd;
+  --color-info-400: #60a5fa;
+  --color-info-500: #3b82f6;
+  --color-info-600: #2563eb;
+  --color-info-700: #1d4ed8;
+  --color-info-800: #1e40af;
+  --color-info-900: #1e3a8a;
+  --color-info-950: #172554;
+
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* Typography Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+
+  /* Line Height Scale */
+  --line-height-xs: 1rem;
+  --line-height-sm: 1.25rem;
+  --line-height-base: 1.5rem;
+  --line-height-lg: 1.75rem;
+  --line-height-xl: 1.75rem;
+  --line-height-2xl: 2rem;
+  --line-height-3xl: 2.25rem;
+  --line-height-4xl: 2.5rem;
+  --line-height-5xl: 1;
+  --line-height-6xl: 1;
+
+  /* Font Weight Scale */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing Scale */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-40: 10rem;
+  --spacing-48: 12rem;
+  --spacing-56: 14rem;
+  --spacing-64: 16rem;
+
+  /* Border Radius Scale */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadow Scale */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-none: 0 0 #0000;
+
+  /* Transition Tokens */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+  
+  /* Z-Index Scale */
+  --z-0: 0;
+  --z-10: 10;
+  --z-20: 20;
+  --z-30: 30;
+  --z-40: 40;
+  --z-50: 50;
+
+  /* Base UI Configuration */
+  --ui-radius: var(--radius-md);
+  --ui-container: 1280px;
+  --ui-header-height: 4rem;
+
+  /* Semantic Color Assignments - Light Mode */
+  --ui-primary: var(--color-primary-600);
+  --ui-secondary: var(--color-secondary-600);
+  --ui-success: var(--color-success-600);
+  --ui-info: var(--color-info-600);
+  --ui-warning: var(--color-warning-600);
+  --ui-error: var(--color-error-600);
+
+  /* Text Color Variables - Light Mode */
+  --ui-text-dimmed: var(--color-neutral-400);
+  --ui-text-muted: var(--color-neutral-500);
+  --ui-text-toned: var(--color-neutral-600);
+  --ui-text: var(--color-neutral-700);
+  --ui-text-highlighted: var(--color-neutral-900);
+  --ui-text-inverted: #ffffff;
+
+  /* Background Color Variables - Light Mode */
+  --ui-bg: #ffffff;
+  --ui-bg-muted: var(--color-neutral-50);
+  --ui-bg-elevated: var(--color-neutral-100);
+  --ui-bg-accented: var(--color-neutral-200);
+  --ui-bg-inverted: var(--color-neutral-900);
+
+  /* Border Color Variables - Light Mode */
+  --ui-border: var(--color-neutral-200);
+  --ui-border-muted: var(--color-neutral-200);
+  --ui-border-accented: var(--color-neutral-300);
+  --ui-border-inverted: var(--color-neutral-900);
+
+  /* Focus Ring Color */
+  --ui-focus-ring: var(--color-primary-500);
+  --ui-focus-ring-opacity: 0.5;
+
+  /* Component-specific Design Tokens */
+  --ui-button-height-sm: 2rem;
+  --ui-button-height-md: 2.5rem;
+  --ui-button-height-lg: 3rem;
+  --ui-button-padding-x-sm: 0.75rem;
+  --ui-button-padding-x-md: 1rem;
+  --ui-button-padding-x-lg: 1.5rem;
+  --ui-button-radius: var(--ui-radius);
+
+  --ui-input-height-sm: 2rem;
+  --ui-input-height-md: 2.5rem;
+  --ui-input-height-lg: 3rem;
+  --ui-input-padding-x: 0.75rem;
+  --ui-input-radius: var(--ui-radius);
+  --ui-input-border-width: 1px;
+
+  --ui-card-padding: 1.5rem;
+  --ui-card-radius: calc(var(--ui-radius) * 2);
+  --ui-card-shadow: var(--shadow-sm);
+  --ui-card-border-width: 1px;
+
+  --ui-modal-radius: calc(var(--ui-radius) * 2);
+  --ui-modal-shadow: var(--shadow-2xl);
+  --ui-modal-backdrop: rgb(0 0 0 / 0.5);
+}
+
+/**
+ * Dark Mode Overrides
+ * Color assignments for dark theme
+ */
+.dark {
+  /* Semantic Color Assignments - Dark Mode */
+  --ui-primary: var(--color-primary-400);
+  --ui-secondary: var(--color-secondary-400);
+  --ui-success: var(--color-success-400);
+  --ui-info: var(--color-info-400);
+  --ui-warning: var(--color-warning-400);
+  --ui-error: var(--color-error-400);
+
+  /* Text Color Variables - Dark Mode */
+  --ui-text-dimmed: var(--color-neutral-500);
+  --ui-text-muted: var(--color-neutral-400);
+  --ui-text-toned: var(--color-neutral-300);
+  --ui-text: var(--color-neutral-200);
+  --ui-text-highlighted: #ffffff;
+  --ui-text-inverted: var(--color-neutral-900);
+
+  /* Background Color Variables - Dark Mode */
+  --ui-bg: var(--color-neutral-900);
+  --ui-bg-muted: var(--color-neutral-800);
+  --ui-bg-elevated: var(--color-neutral-800);
+  --ui-bg-accented: var(--color-neutral-700);
+  --ui-bg-inverted: #ffffff;
+
+  /* Border Color Variables - Dark Mode */
+  --ui-border: var(--color-neutral-800);
+  --ui-border-muted: var(--color-neutral-700);
+  --ui-border-accented: var(--color-neutral-700);
+  --ui-border-inverted: #ffffff;
+
+  /* Focus Ring Color - Dark Mode */
+  --ui-focus-ring: var(--color-primary-400);
+}
+
+/**
+ * Accessibility Utilities
+ * Focus rings and high contrast support
+ */
+
+/* Focus Ring Utility */
+.focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ui-focus-ring);
+  transition: box-shadow var(--transition-fast);
+}
+
+.focus-ring:focus {
+  box-shadow: 0 0 0 2px var(--ui-focus-ring);
+}
+
+/* Focus Visible for keyboard navigation */
+.focus-visible:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ui-focus-ring);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .high-contrast {
+    --ui-text: #000000;
+    --ui-bg: #ffffff;
+    --ui-border: #000000;
+  }
+
+  .dark.high-contrast {
+    --ui-text: #ffffff;
+    --ui-bg: #000000;
+    --ui-border: #ffffff;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    --transition-fast: 0ms;
+    --transition-normal: 0ms;
+    --transition-slow: 0ms;
+  }
+}
+
+/**
+ * Enhanced Typography Utilities
+ * Consistent text styling across the design system
+ */
+
+/* Heading Styles */
+.heading-1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-4xl);
+  letter-spacing: -0.025em;
+  color: var(--ui-text-highlighted);
+}
+
+.heading-2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-3xl);
+  letter-spacing: -0.025em;
+  color: var(--ui-text-highlighted);
+}
+
+.heading-3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-2xl);
+  color: var(--ui-text-highlighted);
+}
+
+.heading-4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-xl);
+  color: var(--ui-text);
+}
+
+/* Body Text Styles */
+.body-large {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  color: var(--ui-text);
+}
+
+.body-base {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--ui-text);
+}
+
+.body-small {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--ui-text-toned);
+}
+
+.caption {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  color: var(--ui-text-muted);
+}
+
+/**
+ * Animation and Transition Utilities
+ * Consistent motion design across components
+ */
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--transition-normal) ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-fast) ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/**
+ * Print Styles
+ * Ensure good print output
+ */
+@media print {
+  :root {
+    --ui-text: #000000;
+    --ui-bg: #ffffff;
+    --ui-border: var(--color-neutral-300);
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-visible {
+    display: block !important;
+  }
+}
+
+/**
+ * Container Queries Support
+ * Responsive design with container queries
+ */
+@container (min-width: 768px) {
+  .container-md\:text-lg {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@container (min-width: 1024px) {
+  .container-lg\:text-xl {
+    font-size: var(--font-size-xl);
+  }
+}

@@ -27,14 +27,22 @@ export default withNuxt(
       // Development files (keep .vscode and .cursor for team sharing)
       '.data',
 
+      // Documentation and cursor tools (contain code examples that shouldn't be linted)
+      '.cursor/tools/**/*.md',
+      // Layer READMEs and root README (ignore codeblocks in docs)
+      'README.md',
+      'layers/**/README.md',
+
       // Git and other VCS
       '.git',
     ],
   }, {
     rules: {
       'node/prefer-global/process': 'off',
+      'node/prefer-global/buffer': 'off',
       'vue/multi-word-component-names': 'off',
       'vue/no-v-text-v-html-on-component': 'off',
+      'no-console': ['error', { allow: ['warn', 'error'] }],
     },
   }),
   // Your custom configs here
